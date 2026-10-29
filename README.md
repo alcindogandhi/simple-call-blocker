@@ -11,7 +11,7 @@ Português do Brasil (padrão, `res/values`) e inglês (`res/values-en`). O app 
 Para testar outro idioma no emulador sem mudar o sistema:
 
 ```sh
-adb shell cmd locale set-app-locales com.simplecallblocker --locales pt-BR   # "" volta ao do sistema
+adb shell cmd locale set-app-locales io.github.alcindogandhi.simplecallblocker --locales pt-BR   # "" volta ao do sistema
 ```
 
 ## Requisitos
@@ -44,7 +44,7 @@ Na primeira abertura o app pede para ser o **app de identificação de chamadas 
 O build de debug inclui um receptor de comandos, aceito só a partir do `adb shell`, para preparar cenários sem tocar na tela:
 
 ```sh
-P=com.simplecallblocker
+P=io.github.alcindogandhi.simplecallblocker
 adb shell cmd role add-role-holder android.app.role.CALL_SCREENING $P
 adb shell am broadcast -p $P -a $P.debug.SET --es key country --es value BR
 adb shell am broadcast -p $P -a $P.debug.ADD_RULE --es type PREFIX --es pattern 0303
@@ -76,3 +76,15 @@ As dependências são criadas uma única vez no `AppContainer` (`SimpleCallBlock
 
 - **Registro de chamadas:** no Android 10+ chamadas recusadas pela triagem sempre aparecem no registro do telefone, como *bloqueadas*. Não é possível ocultá-las.
 - **SMS** não é filtrado (exigiria ser o app de SMS padrão).
+
+## Licença
+
+Copyright (C) 2026 Alcindo Gandhi
+
+Este programa é software livre: você pode redistribuí-lo e/ou modificá-lo sob os termos da
+[GNU General Public License](LICENSE), conforme publicada pela Free Software Foundation, na versão 3
+da licença ou (a seu critério) qualquer versão posterior.
+
+Este programa é distribuído na esperança de que seja útil, mas SEM NENHUMA GARANTIA, nem mesmo a
+garantia implícita de COMERCIALIZAÇÃO ou ADEQUAÇÃO A UMA FINALIDADE ESPECÍFICA. Veja a licença
+completa no arquivo [LICENSE](LICENSE).
