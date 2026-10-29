@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Bloqueador de Chamadas</string>
+
+    <string name="nav_home">Início</string>
+    <string name="nav_rules">Regras</string>
+    <string name="nav_history">Histórico</string>
+    <string name="nav_settings">Configurações</string>
+
+    <string name="placeholder_home">Status da proteção e últimos bloqueios aparecerão aqui.</string>
+    <string name="placeholder_rules">Números e prefixos bloqueados aparecerão aqui.</string>
+    <string name="placeholder_history">As chamadas bloqueadas aparecerão aqui.</string>
+    <string name="placeholder_settings">Opções de bloqueio e notificações aparecerão aqui.</string>
+</resources>
