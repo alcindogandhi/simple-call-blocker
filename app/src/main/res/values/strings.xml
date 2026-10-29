@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Bloqueador de Chamadas</string>
 
     <string name="nav_home">Início</string>
@@ -34,7 +34,6 @@
     <string name="rules_field_number">Número</string>
     <string name="rules_field_prefix">Começa com</string>
     <string name="rules_field_label">Descrição (opcional)</string>
-    <string name="rules_hint_number" tools:ignore="TypographyDashes">(11) 99999-0000</string>
     <string name="rules_hint_prefix">0303 ou +1</string>
     <string name="rules_preview_exact">Será bloqueado: %1$s</string>
     <string name="rules_preview_prefix">Bloqueia números que começam com %1$s</string>

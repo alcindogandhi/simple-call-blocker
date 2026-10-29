@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">Call Blocker</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_rules">Rules</string>
+    <string name="nav_history">History</string>
+    <string name="nav_settings">Settings</string>
+
+    <string name="action_cancel">Cancel</string>
+    <string name="action_undo">Undo</string>
+    <string name="action_close">Close</string>
+    <string name="time_today">Today, %1$s</string>
+    <string name="time_yesterday">Yesterday, %1$s</string>
+
+    <string name="home_protection_on">Protection on</string>
+    <string name="home_protection_on_body">Calls that match your rules are declined.</string>
+    <string name="home_protection_off">Protection off</string>
+    <string name="home_protection_off_body">All calls are coming through normally.</string>
+    <string name="home_blocked_today">blocked today</string>
+    <string name="home_active_rules">active rules</string>
+    <string name="home_recent">Recently blocked</string>
+    <string name="home_see_all">See all</string>
+    <string name="home_recent_empty">No calls blocked yet.</string>
+
+    <string name="rules_add">Add</string>
+    <string name="rules_new">New rule</string>
+    <string name="rules_empty">No rules yet. Tap Add to block a number or a prefix.</string>
+    <string name="rules_suggest_telemarketing">Block telemarketing (0303)</string>
+    <string name="rules_telemarketing_label">Telemarketing</string>
+    <string name="rules_deleted">Rule deleted</string>
+    <string name="rules_delete">Delete rule</string>
+    <string name="rule_type_exact">Number</string>
+    <string name="rule_type_prefix">Prefix</string>
+    <string name="rules_field_number">Number</string>
+    <string name="rules_field_prefix">Starts with</string>
+    <string name="rules_field_label">Description (optional)</string>
+    <string name="rules_hint_prefix">0303 or +1</string>
+    <string name="rules_preview_exact">Will block: %1$s</string>
+    <string name="rules_preview_prefix">Blocks numbers starting with %1$s</string>
+    <string name="rules_confirm">Block</string>
+    <string name="rules_error_duplicate">This rule already exists.</string>
+    <string name="rules_error_invalid">Enter at least one digit.</string>
+    <string name="rules_error_exact_length">The number must have 3 to 15 digits.</string>
+    <string name="rules_error_prefix_length">The prefix can have at most 15 digits.</string>
+
+    <string name="history_empty">Blocked calls will show up here.</string>
+    <string name="history_clear">Clear history</string>
+    <string name="history_clear_title">Clear history?</string>
+    <plurals name="history_clear_body">
+        <item quantity="one">The entry will be deleted. Your rules are not affected.</item>
+        <item quantity="other">All %1$d entries will be deleted. Your rules are not affected.</item>
+    </plurals>
+    <string name="history_copy">Copy number</string>
+    <string name="history_copied">Number copied</string>
+    <string name="history_remove_rule">Remove rule %1$s</string>
+    <string name="history_rule_removed">Rule removed</string>
+    <string name="history_no_actions">Blocked by a setting, not by a rule.</string>
+
+    <string name="settings_section_blocking">Blocking</string>
+    <string name="settings_block_hidden">Hidden numbers</string>
+    <string name="settings_block_hidden_summary">Declines calls with no caller ID.</string>
+    <string name="settings_block_unknown">Numbers not in contacts</string>
+    <string name="settings_block_unknown_summary">Only accepts calls from people in your contacts. Requires access to contacts.</string>
+    <string name="settings_contacts_denied">Without access to contacts there is no way to tell who is unknown.</string>
+    <string name="settings_section_notifications">Notifications</string>
+    <string name="settings_notify">Notify when blocking</string>
+    <string name="settings_notify_summary">Shows a quiet notification for each blocked call.</string>
+    <string name="settings_notifications_denied">Notifications are turned off for this app.</string>
+    <string name="settings_open_system">Open</string>
+    <string name="settings_section_region">Region</string>
+    <string name="settings_country">Country</string>
+    <string name="settings_country_auto">Automatic (%1$s)</string>
+    <string name="settings_country_auto_option">Automatic</string>
+    <string name="settings_country_auto_detail">From SIM or network: %1$s</string>
+    <string name="settings_country_search">Search country or +code</string>
+    <string name="settings_country_help">Sets how numbers without a country code are read, both in rules and in incoming calls.</string>
+    <string name="settings_section_about">About</string>
+    <string name="settings_screening_app">Caller ID app</string>
+    <string name="settings_screening_app_summary">Change or turn off the app that screens your calls.</string>
+    <string name="settings_version">Version</string>
+
+    <string name="onboarding_title">Block unwanted calls</string>
+    <string name="onboarding_body">To screen your calls, set this app as your caller ID &amp; spam app.</string>
+    <string name="onboarding_benefit_rules">Declines the numbers and prefixes you choose</string>
+    <string name="onboarding_benefit_offline">Works offline: nothing leaves your phone</string>
+    <string name="onboarding_benefit_toggle">Turn blocking off whenever you want</string>
+    <string name="onboarding_enable">Turn on protection</string>
+    <string name="onboarding_denied">Without this permission the app can\'t screen calls. If the prompt doesn\'t show up again, pick this app in Settings › Default apps › Caller ID &amp; spam app.</string>
+    <string name="onboarding_open_settings">Open settings</string>
+    <string name="onboarding_unavailable">This device doesn\'t allow apps to screen calls.</string>
+
+    <string name="hidden_number">Hidden number</string>
+    <string name="reason_rule_exact">Blocked number</string>
+    <string name="reason_rule_prefix">Blocked prefix</string>
+    <string name="reason_hidden">Hidden number</string>
+    <string name="reason_unknown">Not in contacts</string>
+
+    <string name="notification_channel_blocked">Blocked calls</string>
+    <string name="notification_blocked_title">Call from %1$s blocked</string>
+</resources>

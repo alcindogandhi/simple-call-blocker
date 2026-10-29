@@ -4,6 +4,16 @@ App Android simples que recusa chamadas indesejadas: números específicos, pref
 
 A especificação completa está em [SPEC.md](SPEC.md).
 
+## Idiomas
+
+Português do Brasil (padrão, `res/values`) e inglês (`res/values-en`). O app segue o idioma do aparelho; no Android 13+ o idioma do app também pode ser escolhido em Configurações › Apps › Bloqueador de Chamadas › Idioma. Para incluir outro idioma, crie `res/values-<código>/strings.xml` com as mesmas chaves: a lista de idiomas do app é gerada no build.
+
+Para testar outro idioma no emulador sem mudar o sistema:
+
+```sh
+adb shell cmd locale set-app-locales com.simplecallblocker --locales pt-BR   # "" volta ao do sistema
+```
+
 ## Requisitos
 
 - Android 10 (API 29) ou mais novo no aparelho.
@@ -66,4 +76,3 @@ As dependências são criadas uma única vez no `AppContainer` (`SimpleCallBlock
 
 - **Registro de chamadas:** no Android 10+ chamadas recusadas pela triagem sempre aparecem no registro do telefone, como *bloqueadas*. Não é possível ocultá-las.
 - **SMS** não é filtrado (exigiria ser o app de SMS padrão).
-- **Textos** só em português. O app já declara seus idiomas: para adicionar inglês, crie `app/src/main/res/values-en/strings.xml`.

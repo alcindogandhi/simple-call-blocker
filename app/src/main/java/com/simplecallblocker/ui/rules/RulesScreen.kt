@@ -127,6 +127,7 @@ fun RulesScreen(viewModel: RulesViewModel = viewModel(factory = RulesViewModel.F
     if (showAddDialog) {
         AddRuleDialog(
             preview = viewModel::preview,
+            exampleNumber = viewModel.exampleNumber(),
             onSubmit = viewModel::add,
             onDismiss = { showAddDialog = false },
         )
@@ -157,6 +158,7 @@ private fun RuleRow(item: RuleItem, onToggle: (Boolean) -> Unit, onDelete: () ->
 @Composable
 private fun AddRuleDialog(
     preview: (RuleType, String) -> String?,
+    exampleNumber: String?,
     onSubmit: suspend (RuleType, String, String) -> AddRuleResult,
     onDismiss: () -> Unit,
 ) {
@@ -200,7 +202,7 @@ private fun AddRuleDialog(
                         Text(stringResource(if (type == RuleType.EXACT) R.string.rules_field_number else R.string.rules_field_prefix))
                     },
                     placeholder = {
-                        Text(stringResource(if (type == RuleType.EXACT) R.string.rules_hint_number else R.string.rules_hint_prefix))
+                        Text(if (type == RuleType.EXACT) exampleNumber.orEmpty() else stringResource(R.string.rules_hint_prefix))
                     },
                     isError = error != null || (normalized == null && input.any(Char::isDigit)),
                     supportingText = {

@@ -142,6 +142,7 @@ Build: Gradle Kotlin DSL + `libs.versions.toml`. Dependências: Compose BOM, Mat
 5. Onboarding com solicitação de `ROLE_CALL_SCREENING`.
 6. Telas Regras, Histórico, Início, Configurações.
 7. Polimento: estados vazios, validação de entrada, ícone, strings em pt-BR (com `values/strings.xml` em pt-BR e espaço para en: `resources.properties` declara pt-BR como idioma padrão e `generateLocaleConfig` publica os idiomas do app). Build de release (R8) validado no emulador.
+8. Tradução para inglês (`res/values-en`). A dica do campo de número vem da libphonenumber para o país configurado, não do idioma.
 
 ## 10. Verificação
 - **Unitários**: `./gradlew test` — casos: número exato (com/sem `+55`, com máscara), prefixo `0303`, prefixo DDI, oculto, desconhecido vs. contato, bloqueio geral desligado, chamada de saída, exceção → permitir.

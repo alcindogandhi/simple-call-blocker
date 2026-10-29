@@ -111,6 +111,14 @@ class NumberNormalizerTest {
     }
 
     @Test
+    fun `exemplo de numero segue o pais`() {
+        val brasil = normalizer.exampleNumber()!!
+        assertEquals(brasil, normalizer.formatForDisplay(normalizer.normalizeExact(brasil)!!))
+        assertTrue(brasil.startsWith("("))
+        assertTrue(NumberNormalizer("PT").exampleNumber()!!.startsWith("9"))
+    }
+
+    @Test
     fun `regiao invalida usa BR`() {
         assertEquals("BR", NumberNormalizer("zz").region)
         assertEquals("BR", NumberNormalizer(null).region)

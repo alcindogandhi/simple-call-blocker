@@ -69,6 +69,11 @@ class NumberNormalizer(defaultRegion: String?) {
         return util.format(parsed, format)
     }
 
+    /** Exemplo de celular do país no formato nacional, para dicas de preenchimento. */
+    fun exampleNumber(): String? =
+        util.getExampleNumberForType(region, PhoneNumberUtil.PhoneNumberType.MOBILE)
+            ?.let { util.format(it, PhoneNumberUtil.PhoneNumberFormat.NATIONAL) }
+
     fun matches(rule: BlockRule, number: IncomingNumber): Boolean {
         val pattern = rule.pattern
         val international = pattern.startsWith("+")

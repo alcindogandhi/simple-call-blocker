@@ -49,6 +49,8 @@ class RulesViewModel(private val container: AppContainer) : ViewModel() {
         }
     }
 
+    fun exampleNumber(): String? = normalizer.value?.exampleNumber()
+
     suspend fun add(type: RuleType, input: String, label: String): AddRuleResult =
         container.rulesRepository.add(type, input, label)
 
