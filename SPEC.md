@@ -24,6 +24,7 @@ Decisões assumidas como padrão (podem ser alteradas na revisão):
 | F6 | Histórico de bloqueios | Lista local: número, data/hora, motivo (regra que bloqueou). Ação rápida "desbloquear"/"remover regra". |
 | F7 | Notificação de bloqueio (opcional) | Notificação discreta "Chamada de X bloqueada". Desligável. |
 | F8 | Ocultar do registro do sistema (opcional) | Usa `setSkipCallLog(true)` para não poluir o histórico do telefone. |
+| F9 | País | Automático (chip → rede → `BR`) ou escolhido pelo usuário. Define como números sem DDI são interpretados. |
 
 ### Fora do escopo (v2+)
 Bloqueio de SMS, lista de permitidos explícita, agendamento por horário, importação/exportação, base de spam colaborativa/online, verificação STIR/SHAKEN, widgets.
@@ -58,7 +59,8 @@ Requisitos não funcionais do serviço:
 - Gravar o log de bloqueio **depois** de responder (coroutine em `Dispatchers.IO`).
 
 ## 4. Normalização de números
-- Usar `PhoneNumberUtils.formatNumberToE164(raw, countryIso)` com `countryIso` vindo de `TelephonyManager.networkCountryIso`/`simCountryIso` (fallback `"BR"`).
+- Usar a **libphonenumber** (Java puro, testável na JVM; é a mesma base do `PhoneNumberUtils` do Android) com o país de F9: o escolhido nas configurações ou, se automático, `TelephonyManager.simCountryIso` → `networkCountryIso` → `"BR"`.
+- Mudar o país não altera regras existentes: exatas já estão em E.164 e prefixos são guardados como digitados.
 - Regras **exatas** são armazenadas em E.164 já normalizadas no cadastro → comparação por igualdade.
 - Regras de **prefixo** comparam contra duas formas: só dígitos do número cru (para `0303…`, que não é E.164 válido) e a forma E.164 (para `+55…`, `+1…`).
 - Lógica isolada em uma classe pura (`NumberNormalizer`) para testes unitários.
@@ -82,7 +84,7 @@ Requisitos não funcionais do serviço:
     val ruleId: Long?
 )
 ```
-Configurações em **DataStore Preferences**: `blockingEnabled`, `blockHidden`, `blockUnknown`, `notifyOnBlock`, `skipCallLog`.
+Configurações em **DataStore Preferences**: `blockingEnabled`, `blockHidden`, `blockUnknown`, `notifyOnBlock`, `skipCallLog`, `countryIso` (null = automático).
 Histórico: manter no máximo os últimos 500 registros (limpeza ao inserir).
 
 ## 6. Telas (Compose, navegação com bottom bar)
@@ -90,7 +92,7 @@ Histórico: manter no máximo os últimos 500 registros (limpeza ao inserir).
 2. **Início** — interruptor geral grande, status ("Proteção ativa" / "Papel não concedido"), contagem de bloqueios hoje, últimos 5 bloqueios.
 3. **Regras** — lista de regras (exatas e prefixos) com switch por regra, swipe para excluir, FAB "Adicionar" (diálogo: tipo, número/prefixo, rótulo; validação e prévia do número normalizado).
 4. **Histórico** — lista cronológica; ao tocar: "Copiar número", "Remover regra que bloqueou", "Limpar histórico".
-5. **Configurações** — switches F4, F5 (pede `READ_CONTACTS` ao ativar), F7 (pede `POST_NOTIFICATIONS` no Android 13+), F8; "Sobre".
+5. **Configurações** — switches F4, F5 (pede `READ_CONTACTS` ao ativar), F7 (pede `POST_NOTIFICATIONS` no Android 13+), F8; seletor de país (F9, "Automático (BR)" + lista); "Sobre".
 
 ## 7. Permissões e manifesto
 - Serviço:
