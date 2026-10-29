@@ -20,7 +20,18 @@ class SettingsRepository(private val dataStore: DataStore<Preferences>) {
 
     suspend fun setBlockingEnabled(value: Boolean) = set(Keys.BLOCKING_ENABLED, value)
     suspend fun setBlockHidden(value: Boolean) = set(Keys.BLOCK_HIDDEN, value)
-    suspend fun setBlockUnknown(value: Boolean) = set(Keys.BLOCK_UNKNOWN, value)
+
+    /**
+     * Ao ligar, liga também "números ocultos": quem só aceita contatos não quer atender quem esconde o número.
+     * Ao desligar, "números ocultos" fica como está.
+     */
+    suspend fun setBlockUnknown(value: Boolean) {
+        dataStore.edit {
+            it[Keys.BLOCK_UNKNOWN] = value
+            if (value) it[Keys.BLOCK_HIDDEN] = true
+        }
+    }
+
     suspend fun setNotifyOnBlock(value: Boolean) = set(Keys.NOTIFY_ON_BLOCK, value)
 
     /** [iso] no formato ISO 3166-1 alfa-2 (`BR`, `PT`); null volta para a detecção automática. */

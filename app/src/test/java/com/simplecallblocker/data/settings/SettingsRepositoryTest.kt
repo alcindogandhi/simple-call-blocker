@@ -48,6 +48,27 @@ class SettingsRepositoryTest {
     }
 
     @Test
+    fun `ligar desconhecidos liga tambem ocultos`() = runTest {
+        val repo = repository()
+        repo.setBlockUnknown(true)
+        assertEquals(true, repo.settings.first().blockHidden)
+    }
+
+    @Test
+    fun `desligar desconhecidos mantem ocultos e ocultos pode ser desligado sozinho`() = runTest {
+        val repo = repository()
+        repo.setBlockUnknown(true)
+        repo.setBlockUnknown(false)
+        assertEquals(true, repo.settings.first().blockHidden)
+
+        repo.setBlockUnknown(true)
+        repo.setBlockHidden(false)
+        val settings = repo.settings.first()
+        assertEquals(true, settings.blockUnknown)
+        assertEquals(false, settings.blockHidden)
+    }
+
+    @Test
     fun `pais e salvo em maiusculas e null volta ao automatico`() = runTest {
         val repo = repository()
         repo.setCountryIso("pt")

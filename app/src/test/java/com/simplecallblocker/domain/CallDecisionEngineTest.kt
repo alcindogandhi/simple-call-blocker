@@ -91,6 +91,16 @@ class CallDecisionEngineTest {
     }
 
     @Test
+    fun `bloquear desconhecidos bloqueia ocultos mesmo com a opcao de ocultos desligada`() {
+        val onlyUnknown = defaults.copy(blockUnknown = true, blockHidden = false)
+        assertEquals(CallDecision.Block(BlockReason.HIDDEN), decide(null, onlyUnknown))
+        assertEquals(
+            CallDecision.Block(BlockReason.HIDDEN),
+            decide("11888880000", onlyUnknown, isPresentationAllowed = false, isContact = { true }),
+        )
+    }
+
+    @Test
     fun `desconhecido bloqueado e contato permitido`() {
         val blockUnknown = defaults.copy(blockUnknown = true)
         assertEquals(CallDecision.Block(BlockReason.UNKNOWN), decide("11888880000", blockUnknown))

@@ -39,6 +39,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -102,17 +103,22 @@ fun SettingsScreen(viewModel: SettingsViewModel = viewModel(factory = SettingsVi
                 .verticalScroll(rememberScrollState()),
         ) {
             SectionHeader(stringResource(R.string.settings_section_blocking))
+            // Sem a permissão o serviço ignora "fora dos contatos": a opção aparece desligada.
+            val unknownActive = settings.blockUnknown && contactsAllowed.value
             SwitchItem(
                 title = stringResource(R.string.settings_block_hidden),
-                summary = stringResource(R.string.settings_block_hidden_summary),
-                checked = settings.blockHidden,
+                summary = stringResource(
+                    if (unknownActive) R.string.settings_block_hidden_locked else R.string.settings_block_hidden_summary,
+                ),
+                // Travada enquanto "fora dos contatos" estiver ativa, que já inclui os ocultos.
+                checked = settings.blockHidden || unknownActive,
+                enabled = !unknownActive,
                 onCheckedChange = viewModel::setBlockHidden,
             )
             SwitchItem(
                 title = stringResource(R.string.settings_block_unknown),
                 summary = stringResource(R.string.settings_block_unknown_summary),
-                // Sem a permissão o serviço trata todos como contatos: a opção não tem efeito.
-                checked = settings.blockUnknown && contactsAllowed.value,
+                checked = unknownActive,
                 onCheckedChange = { enable ->
                     when {
                         !enable -> viewModel.setBlockUnknown(false)
@@ -196,14 +202,24 @@ private fun SectionHeader(text: String) {
 }
 
 @Composable
-private fun SwitchItem(title: String, summary: String, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
+private fun SwitchItem(
+    title: String,
+    summary: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    enabled: Boolean = true,
+) {
     ListItem(
-        modifier = Modifier.toggleable(value = checked, role = Role.Switch, onValueChange = onCheckedChange),
+        modifier = Modifier
+            .toggleable(value = checked, enabled = enabled, role = Role.Switch, onValueChange = onCheckedChange)
+            .alpha(if (enabled) 1f else DISABLED_ALPHA),
         headlineContent = { Text(title) },
         supportingContent = { Text(summary) },
-        trailingContent = { Switch(checked = checked, onCheckedChange = null) },
+        trailingContent = { Switch(checked = checked, onCheckedChange = null, enabled = enabled) },
     )
 }
+
+private const val DISABLED_ALPHA = 0.6f
 
 @Composable
 private fun rememberOnResume(compute: () -> Boolean): MutableState<Boolean> {

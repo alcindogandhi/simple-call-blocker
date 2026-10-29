@@ -20,7 +20,7 @@ Decisões assumidas como padrão (podem ser alteradas na revisão):
 | F2 | Bloquear número exato | Usuário cadastra um número (com rótulo opcional). |
 | F3 | Bloquear por prefixo | Ex.: `0303` (telemarketing BR), `+55 11 4…`, `+1` (DDI). |
 | F4 | Bloquear números ocultos/privados | Chamadas sem número identificado. |
-| F5 | Bloquear desconhecidos | Números que não estão nos contatos (requer `READ_CONTACTS`). |
+| F5 | Bloquear desconhecidos | Números que não estão nos contatos (requer `READ_CONTACTS`). Inclui F4: enquanto F5 estiver ativa, F4 aparece ligada e travada, e números ocultos são sempre bloqueados. Ao desligar F5, F4 volta a ser editável e continua ligada. Sem a permissão de contatos, F5 é tratada como desligada (na tela e no serviço). |
 | F6 | Histórico de bloqueios | Lista local: número, data/hora, motivo (regra que bloqueou). Ação rápida "desbloquear"/"remover regra". |
 | F7 | Notificação de bloqueio (opcional) | Notificação discreta "Chamada de X bloqueada". Desligável. |
 | ~~F8~~ | ~~Ocultar do registro do sistema~~ | **Removida.** No Android 10+ chamadas recusadas pela triagem são sempre registradas como `BLOCKED_TYPE`, independentemente de `setSkipCallLog` (confirmado no emulador). O discador as mostra como bloqueadas, não como perdidas. |
@@ -45,7 +45,7 @@ Chamadas permitidas: `CallResponse.Builder().build()` (sem alterações).
 ## 3. Lógica de decisão (ordem de avaliação)
 1. Chamada **não é recebida** (`callDirection != INCOMING`) → permitir.
 2. Bloqueio geral **desligado** → permitir.
-3. Número **oculto** (`handle == null`, número vazio ou `handlePresentation != PRESENTATION_ALLOWED`) → bloquear se F4 ativo, senão permitir.
+3. Número **oculto** (`handle == null`, número vazio ou `handlePresentation != PRESENTATION_ALLOWED`) → bloquear se F4 **ou F5** estiver ativo, senão permitir.
 4. Normalizar o número (ver §4).
 5. Casa com alguma **regra exata** ativa → bloquear (motivo = regra).
 6. Casa com algum **prefixo** ativo → bloquear (motivo = regra).

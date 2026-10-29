@@ -59,8 +59,9 @@
     <string name="settings_section_blocking">Blocking</string>
     <string name="settings_block_hidden">Hidden numbers</string>
     <string name="settings_block_hidden_summary">Declines calls with no caller ID.</string>
+    <string name="settings_block_hidden_locked">Always on while “Numbers not in contacts” is on.</string>
     <string name="settings_block_unknown">Numbers not in contacts</string>
-    <string name="settings_block_unknown_summary">Only accepts calls from people in your contacts. Requires access to contacts.</string>
+    <string name="settings_block_unknown_summary">Only accepts calls from people in your contacts, which includes declining hidden numbers. Requires access to contacts.</string>
     <string name="settings_contacts_denied">Without access to contacts there is no way to tell who is unknown.</string>
     <string name="settings_section_notifications">Notifications</string>
     <string name="settings_notify">Notify when blocking</string>

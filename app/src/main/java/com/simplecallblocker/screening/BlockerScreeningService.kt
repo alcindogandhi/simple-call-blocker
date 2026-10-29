@@ -45,10 +45,13 @@ class BlockerScreeningService : CallScreeningService() {
     }
 
     private suspend fun screen(container: AppContainer, call: CallInfo): Screening {
+        val contacts = ContactsLookup(this)
+        // Sem acesso aos contatos "fora dos contatos" não tem efeito (é assim que a tela também o mostra),
+        // nem arrasta o bloqueio de ocultos.
         val settings = container.settingsRepository.settings.first()
+            .let { if (it.blockUnknown && !contacts.hasPermission()) it.copy(blockUnknown = false) else it }
         val rules = container.rulesRepository.current()
         val normalizer = container.normalizerFor(settings)
-        val contacts = ContactsLookup(this)
         val decision = CallDecisionEngine(normalizer).decide(call, rules, settings, contacts::isContact)
         return Screening(decision, settings, normalizer)
     }

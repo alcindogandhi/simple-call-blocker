@@ -60,8 +60,9 @@
     <string name="settings_section_blocking">Bloqueio</string>
     <string name="settings_block_hidden">Números ocultos</string>
     <string name="settings_block_hidden_summary">Recusa chamadas sem número identificado.</string>
+    <string name="settings_block_hidden_locked">Sempre ativo enquanto “Números fora dos contatos” estiver ligado.</string>
     <string name="settings_block_unknown">Números fora dos contatos</string>
-    <string name="settings_block_unknown_summary">Só recebe chamadas de quem está nos seus contatos. Requer acesso aos contatos.</string>
+    <string name="settings_block_unknown_summary">Só recebe chamadas de quem está nos seus contatos, o que inclui recusar números ocultos. Requer acesso aos contatos.</string>
     <string name="settings_contacts_denied">Sem acesso aos contatos não dá para saber quem é desconhecido.</string>
     <string name="settings_section_notifications">Notificações</string>
     <string name="settings_notify">Avisar quando bloquear</string>

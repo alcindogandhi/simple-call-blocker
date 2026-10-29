@@ -34,7 +34,9 @@ class CallDecisionEngine(private val normalizer: NumberNormalizer) {
 
         val raw = call.rawNumber?.takeIf { it.isNotBlank() }
         if (raw == null || !call.isPresentationAllowed) {
-            return if (settings.blockHidden) CallDecision.Block(BlockReason.HIDDEN) else CallDecision.Allow
+            // Quem só aceita contatos também recusa números ocultos, que nunca podem ser conferidos.
+            val blockHidden = settings.blockHidden || settings.blockUnknown
+            return if (blockHidden) CallDecision.Block(BlockReason.HIDDEN) else CallDecision.Allow
         }
 
         val number = normalizer.parseIncoming(raw)
