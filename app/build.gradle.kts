@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.gandhi.simplecallblocker"
+    namespace = "com.simplecallblocker"
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.gandhi.simplecallblocker"
+        applicationId = "com.simplecallblocker"
         minSdk = 29
         targetSdk = 37
         versionCode = 1

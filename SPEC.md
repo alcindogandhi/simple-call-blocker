@@ -110,7 +110,7 @@ Histórico: manter no máximo os últimos 500 registros (limpeza ao inserir).
 - Ponto a validar em aparelho real: comportamento do `CallScreeningService` para números que **estão** nos contatos (em algumas versões o sistema pode não invocar o serviço para contatos). Isso não afeta o caso de uso principal (bloquear desconhecidos), mas deve ser documentado.
 
 ## 8. Arquitetura e estrutura do projeto
-Módulo único `app`, pacote `com.gandhi.simplecallblocker` (ajustável). Camadas simples, DI manual via uma classe `AppContainer` na `Application` (sem Hilt, para manter simples).
+Módulo único `app`, pacote `com.simplecallblocker` (ajustável). Camadas simples, DI manual via uma classe `AppContainer` na `Application` (sem Hilt, para manter simples).
 ```
 app/src/main/java/.../
   SimpleCallBlockerApp.kt         // Application + AppContainer

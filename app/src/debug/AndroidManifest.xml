@@ -8,8 +8,8 @@
             android:exported="true"
             android:permission="android.permission.DUMP">
             <intent-filter>
-                <action android:name="com.gandhi.simplecallblocker.debug.ADD_RULE" />
-                <action android:name="com.gandhi.simplecallblocker.debug.SET" />
+                <action android:name="com.simplecallblocker.debug.ADD_RULE" />
+                <action android:name="com.simplecallblocker.debug.SET" />
             </intent-filter>
         </receiver>
     </application>

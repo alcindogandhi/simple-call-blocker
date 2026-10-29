@@ -11,6 +11,16 @@
     <string name="placeholder_history">As chamadas bloqueadas aparecerão aqui.</string>
     <string name="placeholder_settings">Opções de bloqueio e notificações aparecerão aqui.</string>
 
+    <string name="onboarding_title">Bloqueie chamadas indesejadas</string>
+    <string name="onboarding_body">Para filtrar suas chamadas, defina este app como seu app de identificação de chamadas e spam.</string>
+    <string name="onboarding_benefit_rules">Recusa números e prefixos que você escolher</string>
+    <string name="onboarding_benefit_offline">Funciona sem internet: nada sai do aparelho</string>
+    <string name="onboarding_benefit_toggle">Desligue o bloqueio quando quiser</string>
+    <string name="onboarding_enable">Ativar proteção</string>
+    <string name="onboarding_denied">Sem essa permissão o app não consegue filtrar chamadas. Se o pedido não aparecer de novo, escolha este app em Configurações › Apps padrão › Identificação de chamadas e spam.</string>
+    <string name="onboarding_open_settings">Abrir configurações</string>
+    <string name="onboarding_unavailable">Este aparelho não permite que apps filtrem chamadas.</string>
+
     <string name="hidden_number">Número oculto</string>
     <string name="reason_rule_exact">Número bloqueado</string>
     <string name="reason_rule_prefix">Prefixo bloqueado</string>
