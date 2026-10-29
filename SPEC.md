@@ -23,7 +23,7 @@ Decisões assumidas como padrão (podem ser alteradas na revisão):
 | F5 | Bloquear desconhecidos | Números que não estão nos contatos (requer `READ_CONTACTS`). |
 | F6 | Histórico de bloqueios | Lista local: número, data/hora, motivo (regra que bloqueou). Ação rápida "desbloquear"/"remover regra". |
 | F7 | Notificação de bloqueio (opcional) | Notificação discreta "Chamada de X bloqueada". Desligável. |
-| F8 | Ocultar do registro do sistema (opcional) | Usa `setSkipCallLog(true)` para não poluir o histórico do telefone. |
+| ~~F8~~ | ~~Ocultar do registro do sistema~~ | **Removida.** No Android 10+ chamadas recusadas pela triagem são sempre registradas como `BLOCKED_TYPE`, independentemente de `setSkipCallLog` (confirmado no emulador). O discador as mostra como bloqueadas, não como perdidas. |
 | F9 | País | Automático (chip → rede → `BR`) ou escolhido pelo usuário. Define como números sem DDI são interpretados. |
 
 ### Fora do escopo (v2+)
@@ -37,7 +37,6 @@ Resposta enviada ao sistema em `onScreenCall`:
 CallResponse.Builder()
     .setDisallowCall(true)
     .setRejectCall(true)              // recusa (quem liga ouve ocupado/caixa postal)
-    .setSkipCallLog(settings.skipCallLog)
     .setSkipNotification(true)        // sem notificação de "chamada perdida" do sistema
     .build()
 ```
@@ -84,15 +83,15 @@ Requisitos não funcionais do serviço:
     val ruleId: Long?
 )
 ```
-Configurações em **DataStore Preferences**: `blockingEnabled`, `blockHidden`, `blockUnknown`, `notifyOnBlock`, `skipCallLog`, `countryIso` (null = automático).
+Configurações em **DataStore Preferences**: `blockingEnabled`, `blockHidden`, `blockUnknown`, `notifyOnBlock`, `countryIso` (null = automático).
 Histórico: manter no máximo os últimos 500 registros (limpeza ao inserir).
 
 ## 6. Telas (Compose, navegação com bottom bar)
 1. **Onboarding / Permissões** — explica o app e pede o papel `ROLE_CALL_SCREENING` via `RoleManager.createRequestRoleIntent`. Reaparece se o papel for revogado.
 2. **Início** — interruptor geral grande, status ("Proteção ativa" / "Papel não concedido"), contagem de bloqueios hoje, últimos 5 bloqueios.
-3. **Regras** — lista de regras (exatas e prefixos) com switch por regra, swipe para excluir, FAB "Adicionar" (diálogo: tipo, número/prefixo, rótulo; validação e prévia do número normalizado).
+3. **Regras** — lista de regras (exatas e prefixos) com switch por regra, botão de excluir com "Desfazer", FAB "Adicionar" (diálogo: tipo, número/prefixo, rótulo; validação e prévia do número normalizado).
 4. **Histórico** — lista cronológica; ao tocar: "Copiar número", "Remover regra que bloqueou", "Limpar histórico".
-5. **Configurações** — switches F4, F5 (pede `READ_CONTACTS` ao ativar), F7 (pede `POST_NOTIFICATIONS` no Android 13+), F8; seletor de país (F9, "Automático (BR)" + lista); "Sobre".
+5. **Configurações** — switches F4, F5 (pede `READ_CONTACTS` ao ativar), F7 (pede `POST_NOTIFICATIONS` no Android 13+); seletor de país (F9, "Automático (BR)" + lista); "Sobre".
 
 ## 7. Permissões e manifesto
 - Serviço:

@@ -14,7 +14,10 @@ import com.simplecallblocker.domain.NumberNormalizer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class SimpleCallBlockerApp : Application() {
@@ -57,6 +60,11 @@ class AppContainer(context: Context) {
 
     fun normalizerFor(settings: BlockingSettings): NumberNormalizer =
         NumberNormalizer(settings.countryIso ?: regionDetector.detect())
+
+    /** Normalizador atualizado a cada mudança de país, para as telas reformatarem os números. */
+    val normalizers: Flow<NumberNormalizer> = settingsRepository.settings
+        .map(::normalizerFor)
+        .distinctUntilChanged { old, new -> old.region == new.region }
 }
 
 val Context.appContainer: AppContainer

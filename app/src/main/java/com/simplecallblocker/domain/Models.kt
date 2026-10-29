@@ -49,7 +49,6 @@ data class BlockingSettings(
     val blockHidden: Boolean = false,
     val blockUnknown: Boolean = false,
     val notifyOnBlock: Boolean = true,
-    val skipCallLog: Boolean = false,
     val countryIso: String? = null,
 )
 

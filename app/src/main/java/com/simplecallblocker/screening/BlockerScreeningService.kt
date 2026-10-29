@@ -39,7 +39,7 @@ class BlockerScreeningService : CallScreeningService() {
                 return@launch
             }
 
-            respondToCall(callDetails, blockResponse(screening.settings))
+            respondToCall(callDetails, blockResponse)
             onBlocked(container, call, decision, screening)
         }
     }
@@ -67,13 +67,13 @@ class BlockerScreeningService : CallScreeningService() {
         }
     }
 
-    private fun blockResponse(settings: BlockingSettings): CallResponse =
-        CallResponse.Builder()
-            .setDisallowCall(true)
-            .setRejectCall(true)
-            .setSkipCallLog(settings.skipCallLog)
-            .setSkipNotification(true)
-            .build()
+    // Sem setSkipCallLog: a partir do Android 10 chamadas recusadas pela triagem são sempre
+    // registradas como BLOCKED_TYPE no registro do sistema, então a opção não teria efeito.
+    private val blockResponse: CallResponse = CallResponse.Builder()
+        .setDisallowCall(true)
+        .setRejectCall(true)
+        .setSkipNotification(true)
+        .build()
 
     private fun Call.Details.toCallInfo() = CallInfo(
         rawNumber = handle?.schemeSpecificPart,

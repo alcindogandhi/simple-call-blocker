@@ -35,7 +35,6 @@ class SettingsRepositoryTest {
         repo.setBlockHidden(true)
         repo.setBlockUnknown(true)
         repo.setNotifyOnBlock(false)
-        repo.setSkipCallLog(true)
 
         assertEquals(
             BlockingSettings(
@@ -43,7 +42,6 @@ class SettingsRepositoryTest {
                 blockHidden = true,
                 blockUnknown = true,
                 notifyOnBlock = false,
-                skipCallLog = true,
             ),
             repo.settings.first(),
         )

@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
  * adb shell am broadcast -a com.simplecallblocker.debug.SET \
  *     -p com.simplecallblocker --es key country --es value BR
  * ```
- * Chaves de SET: blocking_enabled, block_hidden, block_unknown, notify, skip_call_log, country.
+ * Chaves de SET: blocking_enabled, block_hidden, block_unknown, notify, country.
  */
 class DebugCommandReceiver : BroadcastReceiver() {
 
@@ -56,7 +56,6 @@ class DebugCommandReceiver : BroadcastReceiver() {
             "block_hidden" -> settings.setBlockHidden(value)
             "block_unknown" -> settings.setBlockUnknown(value)
             "notify" -> settings.setNotifyOnBlock(value)
-            "skip_call_log" -> settings.setSkipCallLog(value)
             "country" -> settings.setCountryIso(intent.getStringExtra("value"))
             else -> return "chave desconhecida: $key"
         }

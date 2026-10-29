@@ -22,7 +22,6 @@ class SettingsRepository(private val dataStore: DataStore<Preferences>) {
     suspend fun setBlockHidden(value: Boolean) = set(Keys.BLOCK_HIDDEN, value)
     suspend fun setBlockUnknown(value: Boolean) = set(Keys.BLOCK_UNKNOWN, value)
     suspend fun setNotifyOnBlock(value: Boolean) = set(Keys.NOTIFY_ON_BLOCK, value)
-    suspend fun setSkipCallLog(value: Boolean) = set(Keys.SKIP_CALL_LOG, value)
 
     /** [iso] no formato ISO 3166-1 alfa-2 (`BR`, `PT`); null volta para a detecção automática. */
     suspend fun setCountryIso(iso: String?) {
@@ -42,7 +41,6 @@ class SettingsRepository(private val dataStore: DataStore<Preferences>) {
             blockHidden = this[Keys.BLOCK_HIDDEN] ?: defaults.blockHidden,
             blockUnknown = this[Keys.BLOCK_UNKNOWN] ?: defaults.blockUnknown,
             notifyOnBlock = this[Keys.NOTIFY_ON_BLOCK] ?: defaults.notifyOnBlock,
-            skipCallLog = this[Keys.SKIP_CALL_LOG] ?: defaults.skipCallLog,
             countryIso = this[Keys.COUNTRY_ISO],
         )
     }
@@ -52,7 +50,6 @@ class SettingsRepository(private val dataStore: DataStore<Preferences>) {
         val BLOCK_HIDDEN = booleanPreferencesKey("block_hidden")
         val BLOCK_UNKNOWN = booleanPreferencesKey("block_unknown")
         val NOTIFY_ON_BLOCK = booleanPreferencesKey("notify_on_block")
-        val SKIP_CALL_LOG = booleanPreferencesKey("skip_call_log")
         val COUNTRY_ISO = stringPreferencesKey("country_iso")
     }
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Bloqueador de Chamadas</string>
 
     <string name="nav_home">Início</string>
@@ -6,10 +6,78 @@
     <string name="nav_history">Histórico</string>
     <string name="nav_settings">Configurações</string>
 
-    <string name="placeholder_home">Status da proteção e últimos bloqueios aparecerão aqui.</string>
-    <string name="placeholder_rules">Números e prefixos bloqueados aparecerão aqui.</string>
-    <string name="placeholder_history">As chamadas bloqueadas aparecerão aqui.</string>
-    <string name="placeholder_settings">Opções de bloqueio e notificações aparecerão aqui.</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_undo">Desfazer</string>
+    <string name="action_close">Fechar</string>
+    <string name="time_today">Hoje, %1$s</string>
+    <string name="time_yesterday">Ontem, %1$s</string>
+
+    <string name="home_protection_on">Proteção ativa</string>
+    <string name="home_protection_on_body">Chamadas que casam com suas regras são recusadas.</string>
+    <string name="home_protection_off">Proteção desligada</string>
+    <string name="home_protection_off_body">Todas as chamadas estão sendo recebidas normalmente.</string>
+    <string name="home_blocked_today">bloqueadas hoje</string>
+    <string name="home_active_rules">regras ativas</string>
+    <string name="home_recent">Últimos bloqueios</string>
+    <string name="home_see_all">Ver tudo</string>
+    <string name="home_recent_empty">Nenhuma chamada bloqueada ainda.</string>
+
+    <string name="rules_add">Adicionar</string>
+    <string name="rules_new">Nova regra</string>
+    <string name="rules_empty">Nenhuma regra ainda. Toque em Adicionar para bloquear um número ou um prefixo.</string>
+    <string name="rules_suggest_telemarketing">Bloquear telemarketing (0303)</string>
+    <string name="rules_telemarketing_label">Telemarketing</string>
+    <string name="rules_deleted">Regra excluída</string>
+    <string name="rules_delete">Excluir regra</string>
+    <string name="rule_type_exact">Número</string>
+    <string name="rule_type_prefix">Prefixo</string>
+    <string name="rules_field_number">Número</string>
+    <string name="rules_field_prefix">Começa com</string>
+    <string name="rules_field_label">Descrição (opcional)</string>
+    <string name="rules_hint_number" tools:ignore="TypographyDashes">(11) 99999-0000</string>
+    <string name="rules_hint_prefix">0303 ou +1</string>
+    <string name="rules_preview_exact">Será bloqueado: %1$s</string>
+    <string name="rules_preview_prefix">Bloqueia números que começam com %1$s</string>
+    <string name="rules_confirm">Bloquear</string>
+    <string name="rules_error_duplicate">Essa regra já existe.</string>
+    <string name="rules_error_invalid">Digite ao menos um dígito.</string>
+
+    <string name="history_empty">As chamadas bloqueadas aparecerão aqui.</string>
+    <string name="history_clear">Limpar histórico</string>
+    <string name="history_clear_title">Limpar histórico?</string>
+    <plurals name="history_clear_body">
+        <item quantity="one">O registro será apagado. As regras não são afetadas.</item>
+        <item quantity="many">Os %1$d registros serão apagados. As regras não são afetadas.</item>
+        <item quantity="other">Os %1$d registros serão apagados. As regras não são afetadas.</item>
+    </plurals>
+    <string name="history_copy">Copiar número</string>
+    <string name="history_copied">Número copiado</string>
+    <string name="history_remove_rule">Remover a regra %1$s</string>
+    <string name="history_rule_removed">Regra removida</string>
+    <string name="history_no_actions">Bloqueado por uma opção das configurações, não por uma regra.</string>
+
+    <string name="settings_section_blocking">Bloqueio</string>
+    <string name="settings_block_hidden">Números ocultos</string>
+    <string name="settings_block_hidden_summary">Recusa chamadas sem número identificado.</string>
+    <string name="settings_block_unknown">Números fora dos contatos</string>
+    <string name="settings_block_unknown_summary">Só recebe chamadas de quem está nos seus contatos. Requer acesso aos contatos.</string>
+    <string name="settings_contacts_denied">Sem acesso aos contatos não dá para saber quem é desconhecido.</string>
+    <string name="settings_section_notifications">Notificações</string>
+    <string name="settings_notify">Avisar quando bloquear</string>
+    <string name="settings_notify_summary">Mostra uma notificação discreta a cada chamada bloqueada.</string>
+    <string name="settings_notifications_denied">As notificações do app estão desativadas.</string>
+    <string name="settings_open_system">Abrir</string>
+    <string name="settings_section_region">Região</string>
+    <string name="settings_country">País</string>
+    <string name="settings_country_auto">Automático (%1$s)</string>
+    <string name="settings_country_auto_option">Automático</string>
+    <string name="settings_country_auto_detail">Pelo chip ou rede: %1$s</string>
+    <string name="settings_country_search">Buscar país ou +DDI</string>
+    <string name="settings_country_help">Define como números sem DDI são interpretados, tanto nas regras quanto nas chamadas recebidas.</string>
+    <string name="settings_section_about">Sobre</string>
+    <string name="settings_screening_app">App de identificação de chamadas</string>
+    <string name="settings_screening_app_summary">Trocar ou desativar o app que filtra suas chamadas.</string>
+    <string name="settings_version">Versão</string>
 
     <string name="onboarding_title">Bloqueie chamadas indesejadas</string>
     <string name="onboarding_body">Para filtrar suas chamadas, defina este app como seu app de identificação de chamadas e spam.</string>

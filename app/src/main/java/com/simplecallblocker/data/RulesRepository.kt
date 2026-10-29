@@ -50,4 +50,9 @@ class RulesRepository(
     suspend fun setEnabled(id: Long, enabled: Boolean) = dao.setEnabled(id, enabled)
 
     suspend fun delete(id: Long) = dao.delete(id)
+
+    /** Desfaz uma exclusão, recriando a regra com o mesmo id. */
+    suspend fun restore(rule: BlockRule) {
+        dao.insert(rule)
+    }
 }
