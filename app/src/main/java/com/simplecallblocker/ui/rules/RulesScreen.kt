@@ -195,17 +195,23 @@ private fun AddRuleDialog(
                 }
                 OutlinedTextField(
                     value = input,
-                    onValueChange = { input = it; error = null },
+                    onValueChange = { value -> input = value.filter { it.isDigit() || it in ALLOWED_SYMBOLS }; error = null },
                     label = {
                         Text(stringResource(if (type == RuleType.EXACT) R.string.rules_field_number else R.string.rules_field_prefix))
                     },
                     placeholder = {
                         Text(stringResource(if (type == RuleType.EXACT) R.string.rules_hint_number else R.string.rules_hint_prefix))
                     },
-                    isError = error != null,
+                    isError = error != null || (normalized == null && input.any(Char::isDigit)),
                     supportingText = {
                         when {
                             error != null -> Text(stringResource(error!!))
+                            normalized == null && input.any(Char::isDigit) -> Text(
+                                stringResource(
+                                    if (type == RuleType.EXACT) R.string.rules_error_exact_length
+                                    else R.string.rules_error_prefix_length,
+                                ),
+                            )
                             normalized != null -> Text(
                                 if (type == RuleType.EXACT) stringResource(R.string.rules_preview_exact, normalized)
                                 else stringResource(R.string.rules_preview_prefix, normalized),
@@ -218,7 +224,7 @@ private fun AddRuleDialog(
                 )
                 OutlinedTextField(
                     value = label,
-                    onValueChange = { label = it },
+                    onValueChange = { label = it.take(MAX_LABEL_LENGTH) },
                     label = { Text(stringResource(R.string.rules_field_label)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -234,3 +240,7 @@ private fun AddRuleDialog(
         },
     )
 }
+
+/** Máscara que o usuário pode digitar ou colar; o resto é descartado. */
+private const val ALLOWED_SYMBOLS = "+-(). "
+private const val MAX_LABEL_LENGTH = 40

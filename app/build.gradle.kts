@@ -39,6 +39,11 @@ android {
     buildFeatures {
         compose = true
     }
+
+    // Idiomas do app derivados de res/values-*; o padrão (res/values) é pt-BR, ver resources.properties.
+    androidResources {
+        generateLocaleConfig = true
+    }
 }
 
 room {

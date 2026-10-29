@@ -89,7 +89,7 @@ Histórico: manter no máximo os últimos 500 registros (limpeza ao inserir).
 ## 6. Telas (Compose, navegação com bottom bar)
 1. **Onboarding / Permissões** — explica o app e pede o papel `ROLE_CALL_SCREENING` via `RoleManager.createRequestRoleIntent`. Reaparece se o papel for revogado.
 2. **Início** — interruptor geral grande, status ("Proteção ativa" / "Papel não concedido"), contagem de bloqueios hoje, últimos 5 bloqueios.
-3. **Regras** — lista de regras (exatas e prefixos) com switch por regra, botão de excluir com "Desfazer", FAB "Adicionar" (diálogo: tipo, número/prefixo, rótulo; validação e prévia do número normalizado).
+3. **Regras** — lista de regras (exatas e prefixos) com switch por regra, botão de excluir com "Desfazer", FAB "Adicionar" (diálogo: tipo, número/prefixo, rótulo; validação e prévia do número normalizado; número exato com 3 a 15 dígitos, prefixo com até 15, campo aceita só dígitos e `+-(). `).
 4. **Histórico** — lista cronológica; ao tocar: "Copiar número", "Remover regra que bloqueou", "Limpar histórico".
 5. **Configurações** — switches F4, F5 (pede `READ_CONTACTS` ao ativar), F7 (pede `POST_NOTIFICATIONS` no Android 13+); seletor de país (F9, "Automático (BR)" + lista); "Sobre".
 
@@ -104,7 +104,7 @@ Histórico: manter no máximo os últimos 500 registros (limpeza ao inserir).
 ```
 - Papel: `ROLE_CALL_SCREENING` (concedido pelo usuário, sem permissão no manifesto).
 - `READ_CONTACTS` — apenas se F5 for ativado (pedida em tempo de execução).
-- `POST_NOTIFICATIONS` — apenas se F7 for ativado (Android 13+).
+- `POST_NOTIFICATIONS` — Android 13+. Na prática já vem concedida junto com o papel de triagem (`GRANTED_BY_ROLE`); a tela só pede se o usuário a revogar.
 - **Não** usar `READ_CALL_LOG`/`CALL_PHONE` (evita restrições da Play Store).
 - Ponto a validar em aparelho real: comportamento do `CallScreeningService` para números que **estão** nos contatos (em algumas versões o sistema pode não invocar o serviço para contatos). Isso não afeta o caso de uso principal (bloquear desconhecidos), mas deve ser documentado.
 
@@ -141,7 +141,7 @@ Build: Gradle Kotlin DSL + `libs.versions.toml`. Dependências: Compose BOM, Mat
 4. `BlockerScreeningService` + manifesto + log de bloqueio + notificação.
 5. Onboarding com solicitação de `ROLE_CALL_SCREENING`.
 6. Telas Regras, Histórico, Início, Configurações.
-7. Polimento: estados vazios, validação de entrada, ícone, strings em pt-BR (com `values/strings.xml` em pt-BR e espaço para en).
+7. Polimento: estados vazios, validação de entrada, ícone, strings em pt-BR (com `values/strings.xml` em pt-BR e espaço para en: `resources.properties` declara pt-BR como idioma padrão e `generateLocaleConfig` publica os idiomas do app). Build de release (R8) validado no emulador.
 
 ## 10. Verificação
 - **Unitários**: `./gradlew test` — casos: número exato (com/sem `+55`, com máscara), prefixo `0303`, prefixo DDI, oculto, desconhecido vs. contato, bloqueio geral desligado, chamada de saída, exceção → permitir.

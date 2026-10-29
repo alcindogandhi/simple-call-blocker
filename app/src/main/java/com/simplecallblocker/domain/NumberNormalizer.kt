@@ -24,14 +24,20 @@ class NumberNormalizer(defaultRegion: String?) {
 
     private val regionCountryCode = util.getCountryCodeForRegion(region)
 
-    /** Padrão para regra exata: E.164 se o número for válido, senão só dígitos. Null se não houver dígitos. */
-    fun normalizeExact(input: String): String? =
-        toE164(parse(input)?.takeIf { util.isValidNumber(it) }) ?: digitsOnly(input).ifEmpty { null }
+    /**
+     * Padrão para regra exata: E.164 se o número for válido, senão só dígitos.
+     * Null se tiver menos de [MIN_EXACT_DIGITS] ou mais de [MAX_DIGITS] dígitos.
+     */
+    fun normalizeExact(input: String): String? {
+        if (digitsOnly(input).length !in MIN_EXACT_DIGITS..MAX_DIGITS) return null
+        return toE164(parse(input)?.takeIf { util.isValidNumber(it) }) ?: digitsOnly(input)
+    }
 
     /** Padrão para regra de prefixo: mantém o `+` inicial e descarta máscara. Null se não houver dígitos. */
     fun normalizePrefix(input: String): String? {
         val trimmed = input.trim()
-        val digits = digitsOnly(trimmed).ifEmpty { return null }
+        val digits = digitsOnly(trimmed)
+        if (digits.length !in 1..MAX_DIGITS) return null
         return if (trimmed.startsWith("+")) "+$digits" else digits
     }
 
@@ -89,5 +95,11 @@ class NumberNormalizer(defaultRegion: String?) {
 
     companion object {
         const val DEFAULT_REGION = "BR"
+
+        /** Menor código curto plausível (ex.: 102); evita regras acidentais como "5". */
+        const val MIN_EXACT_DIGITS = 3
+
+        /** Máximo de dígitos de um número E.164. */
+        const val MAX_DIGITS = 15
     }
 }

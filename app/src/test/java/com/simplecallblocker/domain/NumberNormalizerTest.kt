@@ -45,6 +45,20 @@ class NumberNormalizerTest {
     }
 
     @Test
+    fun `numero exato precisa ter de 3 a 15 digitos`() {
+        assertNull(normalizer.normalizeExact("55"))
+        assertEquals("102", normalizer.normalizeExact("102"))
+        assertEquals("123456789012345", normalizer.normalizeExact("123456789012345"))
+        assertNull(normalizer.normalizeExact("1234567890123456"))
+    }
+
+    @Test
+    fun `prefixo aceita de 1 a 15 digitos`() {
+        assertEquals("+1", normalizer.normalizePrefix("+1"))
+        assertNull(normalizer.normalizePrefix("1234567890123456"))
+    }
+
+    @Test
     fun `entrada sem digitos e invalida`() {
         assertNull(normalizer.normalizeExact(""))
         assertNull(normalizer.normalizeExact("abc"))

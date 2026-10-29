@@ -41,6 +41,8 @@
     <string name="rules_confirm">Bloquear</string>
     <string name="rules_error_duplicate">Essa regra já existe.</string>
     <string name="rules_error_invalid">Digite ao menos um dígito.</string>
+    <string name="rules_error_exact_length">O número deve ter de 3 a 15 dígitos.</string>
+    <string name="rules_error_prefix_length">O prefixo deve ter no máximo 15 dígitos.</string>
 
     <string name="history_empty">As chamadas bloqueadas aparecerão aqui.</string>
     <string name="history_clear">Limpar histórico</string>
