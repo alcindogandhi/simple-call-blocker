@@ -8,7 +8,7 @@ enum class RuleType { EXACT, PREFIX }
 
 /**
  * Regra de bloqueio. O [pattern] já está normalizado por [NumberNormalizer]:
- * - EXACT: E.164 (`+5511999990000`) ou, se não for um número possível, só dígitos (`4004`).
+ * - EXACT: E.164 (`+5511999990000`) ou, se não for um número válido, só dígitos (`4004`).
  * - PREFIX: `+` seguido de dígitos (compara com o E.164) ou só dígitos (compara com a forma nacional).
  */
 @Entity(

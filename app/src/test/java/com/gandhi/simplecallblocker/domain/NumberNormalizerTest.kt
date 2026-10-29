@@ -28,8 +28,20 @@ class NumberNormalizerTest {
     }
 
     @Test
-    fun `numero curto que nao e possivel fica so com digitos`() {
+    fun `numero que nao e valido fica so com digitos`() {
         assertEquals("4004", normalizer.normalizeExact("4004"))
+    }
+
+    @Test
+    fun `codigo especial 0303 e reconhecido como numero brasileiro`() {
+        assertEquals("+553031234567", normalizer.normalizeExact("0303 123-4567"))
+        assertEquals("0303 123 4567", normalizer.formatForDisplay("+553031234567"))
+    }
+
+    @Test
+    fun `forma do historico e E164 so para numeros validos`() {
+        assertEquals("+5511999990000", normalizer.canonical("011999990000"))
+        assertEquals("4004", normalizer.canonical(" 4004 "))
     }
 
     @Test
@@ -51,6 +63,9 @@ class NumberNormalizerTest {
         val number = normalizer.parseIncoming("011999990000")
         assertEquals("+5511999990000", number.e164)
         assertEquals(setOf("011999990000", "11999990000"), number.localDigits)
+
+        val special = normalizer.parseIncoming("+553031234567")
+        assertEquals(setOf("3031234567", "03031234567"), special.localDigits)
     }
 
     @Test
@@ -72,6 +87,13 @@ class NumberNormalizerTest {
         val rio = BlockRule(type = RuleType.PREFIX, pattern = "21")
         assertFalse(normalizer.matches(rio, normalizer.parseIncoming("+12125550100")))
         assertTrue(normalizer.matches(rio, normalizer.parseIncoming("+5521988887777")))
+    }
+
+    @Test
+    fun `exibicao nacional para o pais padrao e internacional para os demais`() {
+        assertEquals("(11) 99999-0000", normalizer.formatForDisplay("+5511999990000"))
+        assertEquals("+1 212-555-0100", normalizer.formatForDisplay("+12125550100"))
+        assertEquals("4004", normalizer.formatForDisplay("4004"))
     }
 
     @Test

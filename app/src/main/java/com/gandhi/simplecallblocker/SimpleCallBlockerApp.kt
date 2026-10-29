@@ -9,11 +9,13 @@ import com.gandhi.simplecallblocker.data.RulesRepository
 import com.gandhi.simplecallblocker.data.db.AppDatabase
 import com.gandhi.simplecallblocker.data.settings.RegionDetector
 import com.gandhi.simplecallblocker.data.settings.SettingsRepository
+import com.gandhi.simplecallblocker.domain.BlockingSettings
 import com.gandhi.simplecallblocker.domain.NumberNormalizer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class SimpleCallBlockerApp : Application() {
 
@@ -23,6 +25,11 @@ class SimpleCallBlockerApp : Application() {
     override fun onCreate() {
         super.onCreate()
         container = AppContainer(this)
+        // O processo costuma ser iniciado pelo próprio CallScreeningService, que tem poucos segundos
+        // para responder: pré-carrega as configurações e os metadados da libphonenumber.
+        container.applicationScope.launch {
+            container.normalizer().parseIncoming("+5511999990000")
+        }
     }
 }
 
@@ -46,8 +53,10 @@ class AppContainer(context: Context) {
     val historyRepository = HistoryRepository(database.blockedCallDao())
 
     /** Normalizador para o país escolhido nas configurações ou, se automático, o detectado. */
-    suspend fun normalizer(): NumberNormalizer =
-        NumberNormalizer(settingsRepository.settings.first().countryIso ?: regionDetector.detect())
+    suspend fun normalizer(): NumberNormalizer = normalizerFor(settingsRepository.settings.first())
+
+    fun normalizerFor(settings: BlockingSettings): NumberNormalizer =
+        NumberNormalizer(settings.countryIso ?: regionDetector.detect())
 }
 
 val Context.appContainer: AppContainer

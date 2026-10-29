@@ -10,4 +10,13 @@
     <string name="placeholder_rules">Números e prefixos bloqueados aparecerão aqui.</string>
     <string name="placeholder_history">As chamadas bloqueadas aparecerão aqui.</string>
     <string name="placeholder_settings">Opções de bloqueio e notificações aparecerão aqui.</string>
+
+    <string name="hidden_number">Número oculto</string>
+    <string name="reason_rule_exact">Número bloqueado</string>
+    <string name="reason_rule_prefix">Prefixo bloqueado</string>
+    <string name="reason_hidden">Número oculto</string>
+    <string name="reason_unknown">Fora dos contatos</string>
+
+    <string name="notification_channel_blocked">Chamadas bloqueadas</string>
+    <string name="notification_blocked_title">Chamada de %1$s bloqueada</string>
 </resources>

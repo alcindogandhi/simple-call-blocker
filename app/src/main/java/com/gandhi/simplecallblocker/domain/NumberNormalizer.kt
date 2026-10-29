@@ -8,8 +8,9 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber
  * Formas de um número recebido usadas na comparação com as regras.
  *
  * @property e164 forma internacional (`+5511999990000`), ou null se o número não for possível.
- * @property localDigits formas nacionais em dígitos: o número como chegou (se não veio com `+`)
- * e o número nacional significativo (`11999990000`), este só quando o número é do país padrão.
+ * @property localDigits formas nacionais em dígitos: o número como chegou (se não veio com `+`) e,
+ * só quando o número é do país padrão, o número nacional significativo (`11999990000`) e os dígitos
+ * do formato nacional, que preservam o `0` de códigos especiais (`+553031234567` → `03031234567`).
  */
 data class IncomingNumber(val e164: String?, val localDigits: Set<String>)
 
@@ -23,10 +24,9 @@ class NumberNormalizer(defaultRegion: String?) {
 
     private val regionCountryCode = util.getCountryCodeForRegion(region)
 
-    /** Padrão para regra exata: E.164 quando possível, senão só dígitos. Null se não houver dígitos. */
-    fun normalizeExact(input: String): String? {
-        return toE164(parse(input)) ?: digitsOnly(input).ifEmpty { null }
-    }
+    /** Padrão para regra exata: E.164 se o número for válido, senão só dígitos. Null se não houver dígitos. */
+    fun normalizeExact(input: String): String? =
+        toE164(parse(input)?.takeIf { util.isValidNumber(it) }) ?: digitsOnly(input).ifEmpty { null }
 
     /** Padrão para regra de prefixo: mantém o `+` inicial e descarta máscara. Null se não houver dígitos. */
     fun normalizePrefix(input: String): String? {
@@ -42,9 +42,25 @@ class NumberNormalizer(defaultRegion: String?) {
             if (!trimmed.startsWith("+")) digitsOnly(trimmed).takeIf { it.isNotEmpty() }?.let(::add)
             if (parsed != null && parsed.countryCode == regionCountryCode) {
                 add(util.getNationalSignificantNumber(parsed))
+                add(digitsOnly(util.format(parsed, PhoneNumberUtil.PhoneNumberFormat.NATIONAL)))
             }
         }
-        return IncomingNumber(toE164(parsed), localDigits)
+        return IncomingNumber(toE164(parsed?.takeIf { util.isPossibleNumber(it) }), localDigits)
+    }
+
+    /** Forma para guardar no histórico: E.164 se o número for válido, senão como chegou. */
+    fun canonical(raw: String): String =
+        toE164(parse(raw)?.takeIf { util.isValidNumber(it) }) ?: raw.trim()
+
+    /** Formato para exibição: nacional para números do país padrão, internacional para os demais. */
+    fun formatForDisplay(number: String): String {
+        val parsed = parse(number)?.takeIf { util.isValidNumber(it) } ?: return number
+        val format = if (parsed.countryCode == regionCountryCode) {
+            PhoneNumberUtil.PhoneNumberFormat.NATIONAL
+        } else {
+            PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL
+        }
+        return util.format(parsed, format)
     }
 
     fun matches(rule: BlockRule, number: IncomingNumber): Boolean {
@@ -60,8 +76,7 @@ class NumberNormalizer(defaultRegion: String?) {
     }
 
     private fun toE164(parsed: PhoneNumber?): String? =
-        parsed?.takeIf { util.isPossibleNumber(it) }
-            ?.let { util.format(it, PhoneNumberUtil.PhoneNumberFormat.E164) }
+        parsed?.let { util.format(it, PhoneNumberUtil.PhoneNumberFormat.E164) }
 
     private fun parse(input: String): PhoneNumber? =
         try {

@@ -45,8 +45,15 @@ class CallDecisionEngineTest {
     }
 
     @Test
-    fun `prefixo 0303 bloqueia telemarketing`() {
+    fun `prefixo 0303 bloqueia telemarketing nacional ou internacional`() {
         assertEquals(CallDecision.Block(BlockReason.RULE_PREFIX, 2), decide("03031234567"))
+        assertEquals(CallDecision.Block(BlockReason.RULE_PREFIX, 2), decide("+553031234567"))
+    }
+
+    @Test
+    fun `numero 0303 cadastrado como exato bloqueia`() {
+        val rule = BlockRule(id = 5, type = RuleType.EXACT, pattern = normalizer.normalizeExact("0303 123 4567")!!)
+        assertEquals(CallDecision.Block(BlockReason.RULE_EXACT, 5), decide("03031234567", rules = listOf(rule)))
     }
 
     @Test
