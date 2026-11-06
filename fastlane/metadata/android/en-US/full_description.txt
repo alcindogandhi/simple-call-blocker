@@ -1,0 +1,24 @@
+A simple call blocker that does just what it says: it declines the calls you don't want to take.
+
+WHAT IT BLOCKS
+• Specific numbers, with a description so you remember who they are.
+• Prefixes: a whole area code, a country code such as +1, or any number range used by telemarketers.
+• Hidden numbers that don't show caller ID.
+• Optionally, any number that isn't in your contacts.
+
+HOW IT WORKS
+The app uses Android's official support for caller ID & spam apps. It doesn't replace your phone app: just pick it as your caller ID app the first time you open it. Blocked calls are declined without ringing, and the caller hears a busy tone or goes to voicemail.
+
+One switch turns all protection on or off without deleting your rules. The history lists every declined call with date, time and reason, and from there you can copy the number or remove the rule that blocked it. A quiet notification tells you about each block, and can be turned off.
+
+Numbers are read according to your country, detected from the SIM or chosen by you, so a local number and the same number with its country code are recognized as one.
+
+PRIVACY
+• No internet permission: nothing leaves your phone.
+• No ads, no account and no tracking.
+• Contacts are only read if you turn on blocking of numbers not in your contacts.
+
+OPEN SOURCE
+Free software under the GPL-3.0 license. Code, suggestions and bug reports at github.com/alcindogandhi/simple-call-blocker
+
+Requires Android 10 or newer. SMS messages are not filtered.

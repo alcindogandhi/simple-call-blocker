@@ -1,0 +1,24 @@
+Um bloqueador de chamadas simples, que faz só o que promete: recusa as chamadas que você não quer atender.
+
+O QUE ELE BLOQUEIA
+• Números específicos, com uma descrição para você lembrar quem é.
+• Prefixos: o 0303 do telemarketing (sugerido em um toque), um DDD inteiro ou um código de outro país, como +1.
+• Números ocultos, que não se identificam.
+• Opcionalmente, qualquer número que não esteja nos seus contatos.
+
+COMO FUNCIONA
+O app usa o recurso oficial do Android para apps de identificação de chamadas e spam. Ele não precisa substituir o seu discador: basta escolhê-lo como app de identificação na primeira abertura. As chamadas bloqueadas são recusadas sem tocar, e quem ligou ouve sinal de ocupado ou cai na caixa postal.
+
+Um interruptor liga e desliga toda a proteção sem apagar as suas regras. O histórico mostra cada chamada recusada com data, hora e motivo, e a partir dele você copia o número ou remove a regra que o bloqueou. Uma notificação discreta avisa a cada bloqueio, e pode ser desligada.
+
+Os números são interpretados conforme o país, detectado pelo chip ou escolhido por você, então 11 99999-0000 e +55 11 99999-0000 são reconhecidos como o mesmo número.
+
+PRIVACIDADE
+• Sem permissão de internet: nada sai do aparelho.
+• Sem anúncios, sem conta e sem rastreamento.
+• Os contatos só são consultados se você ativar o bloqueio de quem não está nos contatos.
+
+CÓDIGO ABERTO
+Software livre sob a licença GPL-3.0. Código, sugestões e relatos de problemas em github.com/alcindogandhi/simple-call-blocker
+
+Requer Android 10 ou mais recente. Mensagens SMS não são filtradas.

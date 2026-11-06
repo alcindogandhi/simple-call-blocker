@@ -24,8 +24,11 @@ adb shell cmd locale set-app-locales io.github.alcindogandhi.simplecallblocker -
 ```sh
 ./gradlew assembleDebug        # APK de debug
 ./gradlew installDebug         # instala no aparelho/emulador conectado
-./gradlew assembleRelease      # APK de release (minificado, não assinado)
+./gradlew assembleRelease      # APK de release (minificado)
+./gradlew bundleRelease        # AAB de release, formato exigido pela Play Store
 ```
+
+Os builds de release só saem assinados se existir um `keystore.properties` na raiz (ignorado pelo git): copie `keystore.properties.example` e preencha o caminho da chave e as senhas.
 
 Na primeira abertura o app pede para ser o **app de identificação de chamadas e spam** (papel `ROLE_CALL_SCREENING`). Sem isso o sistema não consulta o app. Ao conceder o papel, o Android também concede a permissão de notificações.
 
@@ -58,10 +61,16 @@ Chaves de `SET`: `blocking_enabled`, `block_hidden`, `block_unknown`, `notify`, 
 
 O chip do emulador informa país **US**: escolha o Brasil em Configurações › País (ou pelo comando acima) para que números sem DDI sejam interpretados como brasileiros.
 
+## Publicação
+
+- **Google Play:** o AAB é assinado com a chave de upload; a chave final é gerenciada pelo Google (Play App Signing). Por isso, um APK assinado por outra chave não atualiza a versão instalada pela Play, e vice-versa.
+- **Textos e imagens da loja** (pt-BR e en-US) ficam em `fastlane/metadata/android/`, no formato lido pelo fastlane e pelo F-Droid.
+- **Política de privacidade:** [PRIVACY.md](PRIVACY.md).
+
 ## Estrutura
 
 ```
-app/src/main/java/com/simplecallblocker/
+app/src/main/java/io/github/alcindogandhi/simplecallblocker/
   domain/      regras de negócio puras: NumberNormalizer, CallDecisionEngine, modelos, países
   data/        Room (regras e histórico), DataStore (configurações), repositórios
   screening/   CallScreeningService, consulta de contatos, notificação, papel de triagem
