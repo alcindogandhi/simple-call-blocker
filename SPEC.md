@@ -41,7 +41,7 @@ Implementada em `CallDecisionEngine`, na ordem:
 6. F5 ativa e o número **não está nos contatos** → recusar (motivo: fora dos contatos).
 7. Caso contrário → permitir.
 
-Regras valem mesmo para números salvos nos contatos. A consulta aos contatos só é feita no passo 6, quando necessária.
+A consulta aos contatos só é feita no passo 6, quando necessária. Os passos 3 a 6 só rodam para as chamadas que o sistema envia ao app, o que exclui números ocultos e, sem `READ_CONTACTS`, números salvos nos contatos (ver §10).
 
 **Falha aberta:** qualquer exceção, ou demora acima de 3 s, resulta em chamada permitida. Um defeito nunca deve impedir uma chamada legítima.
 
@@ -153,7 +153,10 @@ As dependências são criadas uma vez no `AppContainer` (`SimpleCallBlockerApp.k
 - **Registro de chamadas (F8 removida):** no Android 10+ chamadas recusadas pela triagem sempre aparecem no registro do sistema como *bloqueadas*, independentemente de `setSkipCallLog`; o discador não as trata como perdidas. A opção de ocultá-las foi removida por não ter efeito.
 - **Entidades do Room no domínio:** os modelos de `domain/` levam as anotações do Room para evitar uma camada de mapeamento; as anotações não impedem os testes na JVM.
 - **Dica do campo de número:** vem do exemplo de celular da libphonenumber para o país configurado, não do idioma.
-- **Ponto em aberto:** confirmar em aparelhos reais se o sistema consulta o serviço de triagem para números que estão nos contatos (algumas versões podem não consultar). Isso não afeta F5, que só precisa recusar quem não é contato.
+- **Chamadas que o sistema envia ao app:** segundo a documentação de [`onScreenCall`](https://developer.android.com/reference/android/telecom/CallScreeningService#onScreenCall(android.telecom.Call.Details)), só chegam ao serviço chamadas com número `tel:`; números salvos nos contatos só chegam se o app tiver `READ_CONTACTS`; e chamadas com apresentação restrita, desconhecida, indisponível ou de telefone público nunca chegam.
+  - **Contatos:** como `READ_CONTACTS` só é pedida ao ligar F5, regras exatas e de prefixo não alcançam números salvos nos contatos enquanto essa permissão não for concedida. F5 não é afetada: ela só precisa recusar quem não é contato.
+  - **Números ocultos (a confirmar):** pela documentação, F4 e a parte de F5 que recusa ocultos não teriam efeito, pois essas chamadas não chegam ao app. Falta testar em aparelho real com uma chamada de número oculto (no Brasil, discando `#31#` antes do número).
+- **Testes em aparelho real (Play, teste interno, versão 1.0.0):** papel de triagem, regras, interruptor geral, notificação, F5 com permissão de contatos (contatos tocam normalmente) e troca de idioma funcionaram.
 
 ## 11. Verificação
 
